@@ -171,6 +171,131 @@ nohup mongod --dbpath ~/data/db --bind_ip 127.0.0.1 > mongodb.log 2>&1 &
 
 ---
 
+The `Illegal instruction` error when running `mongod` typically means:
+
+> ❌ The MongoDB binary is **not compatible** with your system — usually due to CPU incompatibility or trying to run a server build in WSL without proper support (like AVX or systemd).
+
+---
+
+## ✅ Best Way to Use MongoDB in WSL
+
+### 🚀 Option 1: **Use Docker for MongoDB (Recommended)**
+
+Since you're already using WSL and Docker Desktop is installed, you can run MongoDB easily this way:
+
+```bash
+docker run -d --name mongo \
+  -p 27017:27017 \
+  -v mongo-data:/data/db \
+  mongo:7
+```
+
+This:
+
+* Runs MongoDB in a container
+* Maps port 27017
+* Stores your data in a volume called `mongo-data`
+
+You can then connect from your Node.js app to:
+
+```
+mongodb://localhost:27017
+```
+
+💡 To stop the container:
+
+```bash
+docker stop mongo
+```
+
+To start again:
+
+```bash
+docker start mongo
+```
+
+---
+
+### 🧯 Option 2: Remove incompatible install and try older version
+
+If you insist on installing MongoDB directly in WSL, you might try MongoDB **4.4** instead of 7.0, but this is **not recommended** for new projects. Docker is much easier and avoids CPU and systemd issues.
+
+---
+
+## ✅ To Fix This: Enable WSL Integration in Docker Desktop
+
+1. Open **Docker Desktop** on Windows.
+
+2. Go to:
+
+   ```
+   ⚙️ Settings > Resources > WSL Integration
+   ```
+
+3. In the list of distros, **enable Ubuntu** (toggle it ON).
+
+4. Click **Apply & Restart**.
+
+5. Back in WSL (Ubuntu), run:
+
+   ```bash
+   docker --version
+   ```
+
+   If it returns something like:
+
+   ```
+   Docker version 24.x.x, build ...
+   ```
+
+   ✅ You're ready to go!
+
+6. Now try again:
+
+   ```bash
+   docker run -d --name mongo \
+     -p 27017:27017 \
+     -v mongo-data:/data/db \
+     mongo:7
+   ```
+
+---
+
+## ✅ Fix: Add your user to the `docker` group
+
+Run this command **once** in WSL:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+Then, **restart your WSL Ubuntu session** completely (important!):
+
+1. Close your Ubuntu terminal.
+2. Open a **new Ubuntu terminal**.
+
+Now try again:
+
+```bash
+docker run -d --name mongo \
+  -p 27017:27017 \
+  -v mongo-data:/data/db \
+  mongo:7
+```
+
+If successful, you’ll see a container ID like:
+
+```
+4fa1ac2b... (etc)
+```
+
+---
+
+Want to test if MongoDB is working? Run:
+
+```bash
+docker exec -it mongo mongosh
+```
 
 
 
