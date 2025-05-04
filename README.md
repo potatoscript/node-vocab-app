@@ -253,10 +253,10 @@ If you insist on installing MongoDB directly in WSL, you might try MongoDB **4.4
 6. Now try again:
 
    ```bash
-   docker run -d --name mongo \
-     -p 27017:27017 \
-     -v mongo-data:/data/db \
-     mongo:7
+docker run -d --name mongo \
+  -p 27017:27017 \
+  -v mongo-data:/data/db \
+  mongo:4.4
    ```
 
 ---
@@ -280,7 +280,7 @@ Now try again:
 docker run -d --name mongo \
   -p 27017:27017 \
   -v mongo-data:/data/db \
-  mongo:7
+  mongo:4.4
 ```
 
 If successful, you’ll see a container ID like:
