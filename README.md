@@ -51,8 +51,78 @@ You can right-click on `ubuntu.exe` → Create Shortcut and place it on Desktop 
 
 ---
 
-## 🎉 Done! Now Ubuntu WSL is installed on your G: drive!
+### 🎉 Done! Now Ubuntu WSL is installed on your G: drive!
 
 You can now install Node.js, npm, MongoDB, etc., inside this Ubuntu system — and your C: drive remains untouched.
 
 ---
+
+## 🧰 Set up Your Node.js Environment Inside Ubuntu
+
+Now you're inside Ubuntu. Continue as if it's a real Linux system:
+
+### 1. **Update and Install Tools**
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+### 2. **Install Node.js and npm**
+
+Install using Node Version Manager (recommended):
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+source ~/.bashrc
+nvm install node
+```
+
+Verify:
+
+```bash
+node -v
+npm -v
+```
+
+### 3. **Install MongoDB**
+
+Use this for local MongoDB:
+
+```bash
+sudo apt install mongodb
+sudo systemctl start mongodb
+sudo systemctl enable mongodb
+```
+
+Or use [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for a free cloud version.
+
+---
+
+## 🧪 Test: Create a Project
+
+```bash
+mkdir japanese-vocab
+cd japanese-vocab
+npm init -y
+npm install express mongoose
+```
+
+You can now build your Node.js app just like on a regular Ubuntu machine.
+
+---
+
+## 🖥️ Option 2: Use a Virtual Machine (VM)
+
+If you prefer a full Ubuntu desktop GUI:
+
+* Install [VirtualBox](https://www.virtualbox.org/)
+* Download an Ubuntu ISO
+* Create a VM and install Ubuntu inside it
+
+But for web apps, **WSL is faster and easier**.
+
+---
+
+
+
