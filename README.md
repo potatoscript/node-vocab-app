@@ -294,7 +294,7 @@ If successful, you’ll see a container ID like:
 Want to test if MongoDB is working? Run:
 
 ```bash
-docker exec -it mongo mongosh
+docker exec -it mongo mongo
 ```
 
 
