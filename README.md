@@ -124,5 +124,53 @@ But for web apps, **WSL is faster and easier**.
 
 ---
 
+## ✅ Install MongoDB properly on Ubuntu (in WSL)
+
+### Step 1: Import MongoDB’s public GPG key
+
+```bash
+wget -qO - https://pgp.mongodb.com/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/mongodb.asc
+```
+
+### Step 2: Add MongoDB APT repository (for Ubuntu 22.04, replace if using another version)
+
+```bash
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+```
+
+### Step 3: Update and install
+
+```bash
+sudo apt update
+sudo apt install -y mongodb-org
+```
+
+---
+
+## ✅ Start MongoDB manually in WSL
+
+Once installed:
+
+```bash
+sudo mongod --dbpath ~/data/db
+```
+
+If `~/data/db` doesn’t exist, create it first:
+
+```bash
+mkdir -p ~/data/db
+```
+
+This will start MongoDB in the foreground.
+
+> 🛠️ Want to run it in background? You can use:
+
+```bash
+nohup mongod --dbpath ~/data/db --bind_ip 127.0.0.1 > mongodb.log 2>&1 &
+```
+
+---
+
+
 
 
