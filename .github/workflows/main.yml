@@ -22,24 +22,20 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
 
-      - name: 📦 Install dependencies (backend)
+      - name: 📦 Install backend dependencies
+        working-directory: ./jap-vocab-backend
+        run: npm install
+
+      - name: ✅ (Optional) Lint/Build backend
         working-directory: ./jap-vocab-backend
         run: |
-          yarn install || npm install
+          echo "Add backend lint/build steps here"
 
-      - name: ✅ Lint and build backend (optional)
-        working-directory: ./jap-vocab-backend
-        run: |
-          echo "No build step for backend (optional)"
-
-      - name: 📦 Install dependencies (frontend)
+      - name: 📦 Install frontend dependencies
         working-directory: ./jap-vocab-client
-        run: |
-          yarn install || npm install
+        run: npm install
 
       - name: 🔧 Build frontend
         working-directory: ./jap-vocab-client
-        run: |
-          yarn build || npm run build
+        run: npm run build
