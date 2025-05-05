@@ -296,6 +296,48 @@ Want to test if MongoDB is working? Run:
 ```bash
 docker exec -it mongo mongo
 ```
+---
 
+The `jap_vocab` database mentioned in the MongoDB connection string:
+
+```js
+mongoose.connect('mongodb://localhost:27017/jap_vocab', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+```
+
+is a **logical database** created **inside MongoDB**, not a file or folder on your system. Here’s how it works:
+
+---
+
+### 📌 Where is `jap_vocab` located?
+
+* **Inside the running MongoDB container** (your `mongo:4.4` Docker container).
+* Physically, it's stored in the Docker volume you mapped:
+
+  ```bash
+  -v mongo-data:/data/db
+  ```
+* MongoDB will automatically **create** the `jap_vocab` database when you **first insert data into it** (e.g., from your Express app).
+
+---
+
+### 🛠 How to view it?
+
+To inspect it manually:
+
+```bash
+docker exec -it mongo mongo
+```
+
+Then in the MongoDB shell:
+
+```js
+show dbs            // List all databases
+use jap_vocab       // Switch to your database
+show collections    // Show collections (like tables)
+db.vocabs.find()    // Show vocab entries (if inserted)
+```
 
 
