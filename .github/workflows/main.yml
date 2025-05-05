@@ -1,0 +1,45 @@
+name: CI Build Check
+
+on:
+  push:
+    branches: [ potato ]
+  pull_request:
+    branches: [ potato ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🟢 Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: 📦 Install dependencies (backend)
+        working-directory: ./jap-vocab-backend
+        run: |
+          yarn install || npm install
+
+      - name: ✅ Lint and build backend (optional)
+        working-directory: ./jap-vocab-backend
+        run: |
+          echo "No build step for backend (optional)"
+
+      - name: 📦 Install dependencies (frontend)
+        working-directory: ./jap-vocab-client
+        run: |
+          yarn install || npm install
+
+      - name: 🔧 Build frontend
+        working-directory: ./jap-vocab-client
+        run: |
+          yarn build || npm run build
